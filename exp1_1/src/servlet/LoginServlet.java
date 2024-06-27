@@ -16,6 +16,9 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+
 		String username = request.getParameter("username");
 		String passwd = request.getParameter("passwd");
 		System.out.println(username + " " + passwd);
@@ -24,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/exp";
 			String user = "root";
-			String password = "123456";
+			String password = "root";
 			Connection ct = DriverManager.getConnection(url, user, password);
 			String sql = "select * from user where username=? and passwd=?";
 			PreparedStatement ps = ct.prepareStatement(sql);
@@ -32,11 +35,12 @@ public class LoginServlet extends HttpServlet {
 			ps.setString(2, passwd);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
-				System.out.println("µÇÂ¼³É¹¦£¡£¡");
+				System.out.println("ç™»å½•æˆåŠŸï¼");
 				request.setAttribute("username", username);
 				request.getRequestDispatcher("/ok.jsp").forward(request, response);
 			}else{
-				request.setAttribute("msg", "µÇÂ¼Ê§°Ü£¬Çë¼ì²éÊäÈë");
+				System.out.println("ç™»å½•å¤±è´¥ï¼Œè¯·é‡æ–°è¾“å…¥ï¼");
+				request.setAttribute("msg", "ç™»å½•å¤±è´¥ï¼Œè¯·é‡æ–°è¾“å…¥ï¼");
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}
 			
